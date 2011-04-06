@@ -1,0 +1,36 @@
+классификатор подсветка выбранного.
+серверная часть.
+обработка несуществующего запроса (loadingClass)
+
+//62: on left unSelectCurrent()
+selectCategories(); and sub
+options.liSelected
+
+ajax:
+classifier=olala&type=type
+POST 0 -- "group1|group2\nsub1|sub2\ncat1|cat2"
+POST 1 -- "sub1|sub2\ncat1|cat2"
+POST 2 -- "cat1|cat2"
+
+
+showClassifier(); hide now
+Make classifier 3-box
+receiveClassifierData
+options.extraClassifierParams
+options.classifierClass
+options.classifierWidth
+options.groupClass
+options.subgroupClass
+options.categoryClass
+dataToClassifier
+
+hide
+
+options.liAttr = options.liAttr || null;
+options.manClass = options.manClass || "ac_man";
+options.isMan = options.isMan || false;
+options.extraManParams = options.extraManParams || {};
+options.manWidth = parseInt(options.manWidth, 10) || 0;
+group subgroup category
+
+cache

@@ -1,0 +1,415 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+<head>
+<title>Построение пользовательских интерфейсов на основе библиотеки jQuery</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<meta name="author" content="Gennady A. Samkov" />
+<meta name="email" content="smkv@mail.ru" />
+<meta name="domain" content="linkexchanger.su" />
+<meta name="robots" content="noindex" />
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="jquery.autocomplete.js"></script>
+<script type="text/javascript" src="classifier.js"></script>
+<style type="text/css">
+html, body {
+    font-family: "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    font-size: 8pt;
+}
+
+
+* {
+    margin:0;
+    padding:0;
+}
+
+.inline{
+  display: inline-block;
+  vertical-align: top;
+}
+
+.input{
+  background: #FFE8BE;
+  border: none;
+  font-size: 1.5em;
+}
+::-webkit-scrollbar {
+  width: 18px;
+  background: #fff;
+  border: 1px solid #aaa;
+}
+::-webkit-scrollbar-thumb {
+  background: url("thumb_bg.png");
+  border: 1px solid #aaa;
+}
+::-webkit-scrollbar-corner {
+    background: #f00;
+}
+::-webkit-scrollbar-button:increment:start{
+  display: none;
+}
+::-webkit-scrollbar-button:decrement:end{
+  display: none;
+}
+
+::-webkit-scrollbar-button:increment:end{
+  display: block;
+  height: 31px;
+  border-left: 1px solid #aaa;
+  border-right: 1px solid #aaa;
+  border-bottom: 1px solid #aaa;
+  background: url(arrow_down.png) center no-repeat;
+}
+::-webkit-scrollbar-button:decrement:start{
+  height: 31px;
+  display: block;
+  border-left: 1px solid #aaa;
+  border-right: 1px solid #aaa;
+  border-top: 1px solid #aaa;
+  background: url(arrow_up.png) center no-repeat;
+}
+
+::-moz-scrollbar {
+  width: 18px;
+  background: #fff;
+  border: 1px solid #aaa;
+}
+::-moz-scrollbar-thumb {
+    background: url("thumb_bg.png");
+    border: 1px solid #aaa;
+}
+::-moz-scrollbar-corner {
+    background: #f00;
+}
+::-moz-scrollbar-button:increment:start{
+  display: none;
+}
+::-moz-scrollbar-button:decrement:end{
+  display: none;
+}
+
+::-moz-scrollbar-button:increment:end{
+  display: block;
+  height: 31px;
+  border-left: 1px solid #aaa;
+  border-right: 1px solid #aaa;
+  border-bottom: 1px solid #aaa;
+  background: url(arrow_down.png) center no-repeat;
+}
+::-moz-scrollbar-button:decrement:start{
+  height: 31px;
+  display: block;
+  border-left: 1px solid #aaa;
+  border-right: 1px solid #aaa;
+  border-top: 1px solid #aaa;
+  background: url(arrow_up.png) center no-repeat;
+}
+
+
+.man{
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border: 1px solid #aaa;
+  box-shadow: 0 0 5px black; /* Параметры тени */
+  box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Параметры тени */
+  -moz-box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Для Firefox */
+  -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Для Safari и Chrome */
+}
+
+.corner{
+  position:absolute;
+  top: 10px;
+  left: -11px;
+  width: 11px;
+  height: 27px;
+  background: url(corner.png) no-repeat;
+  z-index: 101;
+}
+
+
+.ac_classifier {
+	padding: 5px;
+	border: 1px solid WindowFrame;
+	background: #fff;
+	max-height: 100px;
+	padding-right: 10px;
+}
+
+.ac_groups{
+  overflow-y: scroll;
+	overflow-x: hidden;
+  width: 30%;
+}
+
+.ac_subgroups{
+  padding: 0px 5px;
+  overflow-y: scroll;
+	overflow-x: hidden;
+  width: 30%;
+}
+
+.ac_categories{
+  overflow-y: scroll;
+	overflow-x: hidden;
+  width: 30%;
+}
+
+.ac_classifier ul {
+	list-style-position: outside;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.test{
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.ac_man {
+  position: relative; 
+
+  /*top: 5px; 
+    left: 150px;
+    
+    */
+  overflow-y: scroll;
+/*  overflow-x: hidden;*/
+  margin-left: 10px;
+	padding: 0px;
+	float: right;
+	  font-size: 1em;
+}
+
+.ac_results {
+  border: 1px solid #aaa;
+  box-shadow: 0 0 5px black; /* Параметры тени */
+  box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Параметры тени */
+  -moz-box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Для Firefox */
+  -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Для Safari и Chrome */
+  max-height: 300px;
+  min-height: 30px;
+  padding: 5px;
+  z-index: 100;
+	background-color: #fff;
+	/*padding: 0px;
+	 border: 1px solid WindowFrame;
+	 background-color: Window;
+	 overflow-y: scroll;
+	 overflow-x: hidden;
+	 max-height: 100px;
+	 padding-right: 10px;*/
+}
+
+.ac_results ul {
+  
+/*  width: 100%;*/
+	list-style-position: outside;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.ac_results iframe {
+	display:none;/*sorry for IE5*/
+	display/**/:block;/*sorry for IE5*/
+	position:absolute;
+	top:0;
+	left:0;
+	z-index:-1;
+	filter:mask();
+	width:3000px;
+	height:3000px;
+}
+
+.ac_results li {
+	position:relative;
+  margin: 0px;
+	padding: 2px 5px;
+	cursor: pointer;
+	display: block;
+/*  width: 100%;*/
+	font: menu;
+	font-size: 1.5em;
+	overflow: hidden;
+}
+
+.ac_loading {
+	background: Window url('autocomplete_indicator.gif') right center no-repeat;
+}
+
+.ac_over {
+	background-color: Highlight;
+	color: HighlightText;
+}
+.ac_liselected{
+  background-color: orange;
+  color: HighlightText;
+}
+
+#example {
+  position:absolute;
+  top:10px;
+  left:10px;
+  width:150px;
+  font-family: "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+  font-size: 10pt;
+}
+#example2 {
+  position:absolute;
+  top:10px;
+  left:170px;
+  width:240px;
+  font-family: "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+  font-size: 10pt;
+}
+.qnt {
+  position:absolute;
+  top:2px;
+  right:10px;
+  font-size:0.8em;
+  color:#26A908;
+}
+body{
+  padding: 20px;
+}
+
+</style>
+</head>
+<body>
+<!-- css и javascript-коды специально размещены непосредственно на странице. -->
+<br>
+<br>
+Towns(r): <input type="text" id="towns" class="input" />
+Cases: <input type="text" id="cases" class="input"/>
+Classifier: <input type="text" id="classifier" class="input"/>
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+// --- Автозаполнение ---
+$("#towns").autocompleteArray([
+'Магадан',
+'Магас',
+'Магнитогорск',
+'Майкоп',
+'Майский',
+'Макаров',
+'Макарьев',
+'Макушино',
+'Малая Вишера',
+'Малгобек',
+'Малмыж',
+'Малоархангельск',
+'Малоярославец',
+'Мамадыш',
+'Мамоново',
+'Мантурово',
+'Мариинск',
+'Мариинский Посад',
+'Маркс',
+'Махачкала',
+'Мглин',
+'Мегион',
+'Медвежьегорск',
+'Медногорск',
+'Медынь',
+'Межгорье',
+'Междуреченск',
+'Мезень',
+'Меленки',
+'Мелеуз',
+'Менделеевск',
+'Мензелинск',
+'Мещовск',
+'Миасс',
+'Микунь',
+'Миллерово',
+'Минеральные Воды',
+'Минусинск',
+'Миньяр',
+'Мирный',
+'Михайлов',
+'Михайловка',
+'Михайловск',
+'Мичуринск',
+'Могоча',
+'Можайск',
+'Можга',
+'Моздок',
+'Мончегорск',
+'Морозовск',
+'Моршанск',
+'Мосальск',
+'Москва',
+'Московский',
+'Муравленко',
+'Мураши',
+'Мурманск',
+'Муром',
+'Мценск',
+'Мыски',
+'Мытищи',
+'Мышкин'
+],
+		{
+			delay:10,
+			minChars:0,
+			matchSubset:1,
+			mustMatch:true
+		}
+);
+// --- Автозаполнение ---
+
+
+function selectItem(li) {
+	if( li == null ) var sValue = 'А ничего не выбрано!';
+	if( !!li.extra ) var sValue = li.extra[2];
+	else var sValue = li.selectValue;
+	alert("Выбрана запись с ID: " + sValue);
+}
+
+// --- Автозаполнение2 ---
+$("#cases").autocomplete("autocomplete.php", 
+{
+  delay:100,
+  minChars:1,   
+  matchSubset:1,   
+  autoFill:true,   
+  matchContains:1,   
+  cacheLength:10,   
+  selectFirst:true,   
+  maxItemsToShow:10,
+  isMan:true,
+  mustMatch:true,
+  resWidth:150,
+  width:500
+}); 
+
+$("#classifier").classifier("autocomplete.php", 
+{
+  delay:100,
+  minChars:1,   
+  matchSubset:1,   
+  autoFill:true,   
+  matchContains:1,   
+  cacheLength:10,   
+  selectFirst:true,   
+  maxItemsToShow:10,
+  width:300,
+  mustMatch:true
+}); 
+
+// --- Автозаполнение2 ---
+});
+</script>
+<br>
+<br>
+<br>
+
+<div id="debug">ololo</div>
+</body>
+</html>
