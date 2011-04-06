@@ -190,7 +190,7 @@ html, body {
   box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Параметры тени */
   -moz-box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Для Firefox */
   -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Для Safari и Chrome */
-  max-height: 300px;
+  max-height: 350px;
   min-height: 30px;
   padding: 5px;
   z-index: 100;
@@ -277,6 +277,19 @@ body{
   padding: 20px;
 }
 
+#cases{
+  width: 200px;
+}
+
+.dotted{
+  position: relative;
+  border-bottom: 2px dotted green;
+}
+.none{
+  color: #000;
+  text-decoration: none;
+}
+
 </style>
 </head>
 <body>
@@ -284,8 +297,9 @@ body{
 <br>
 <br>
 Towns(r): <input type="text" id="towns" class="input" />
-Cases: <input type="text" id="cases" class="input"/>
-Classifier: <input type="text" id="classifier" class="input"/>
+
+<br>
+Cases: <div id="cases" class="input"><a href="ololo" class="none"><span class="dotted">input</span></a></div>
 
 
 <script type="text/javascript">
@@ -359,51 +373,11 @@ $("#towns").autocompleteArray([
 			delay:10,
 			minChars:0,
 			matchSubset:1,
-			mustMatch:true
+			mustMatch:true,
+			maxItemsToShow:15
 		}
 );
-// --- Автозаполнение ---
 
-
-function selectItem(li) {
-	if( li == null ) var sValue = 'А ничего не выбрано!';
-	if( !!li.extra ) var sValue = li.extra[2];
-	else var sValue = li.selectValue;
-	alert("Выбрана запись с ID: " + sValue);
-}
-
-// --- Автозаполнение2 ---
-$("#cases").autocomplete("autocomplete.php", 
-{
-  delay:100,
-  minChars:1,   
-  matchSubset:1,   
-  autoFill:true,   
-  matchContains:1,   
-  cacheLength:10,   
-  selectFirst:true,   
-  maxItemsToShow:10,
-  isMan:true,
-  mustMatch:true,
-  resWidth:150,
-  width:500
-}); 
-
-$("#classifier").classifier("autocomplete.php", 
-{
-  delay:100,
-  minChars:1,   
-  matchSubset:1,   
-  autoFill:true,   
-  matchContains:1,   
-  cacheLength:10,   
-  selectFirst:true,   
-  maxItemsToShow:10,
-  width:300,
-  mustMatch:true
-}); 
-
-// --- Автозаполнение2 ---
 });
 </script>
 <br>

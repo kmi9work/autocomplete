@@ -15,12 +15,9 @@ jQuery.autocomplete = function(input, options) {
 	var $results = $(results);
 	var cornerDiv = document.createElement("div");
 	var $cornerDiv = $(cornerDiv);
-	$results.css("overflow-x", "hidden").css("overflow-y", "scroll").css("max-height", "300px").addClass("inline").css("float", "left").css("position", "relative");
+	$results.css("overflow", "hidden").css("max-height", "400px").addClass("inline").css("float", "left").css("position", "relative");
 	$cornerDiv.append("<div class='corner'></div>").css("padding", "5px").addClass(options.resultsClass);
-	var testDiv = document.createElement("div");
-	$(testDiv).addClass("test");
-	$cornerDiv.append(testDiv);
-	$(testDiv).append(results);
+	$cornerDiv.append(results);
 	$cornerDiv.hide().css("position", "absolute");
 	
 	if( options.resWidth > 0 ) $results.css("width", options.resWidth);
@@ -37,7 +34,7 @@ jQuery.autocomplete = function(input, options) {
   	selected_li = null;
   	$man.hide().addClass(options.manClass);// .css("position", "absolute");
   	if( options.manWidth > 0 ) $man.css("width", options.manWidth);
-  	$(testDiv).append(man);
+  	$(cornerDiv).append(man);
   }
 	input.autocompleter = me;
 
