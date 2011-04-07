@@ -1,0 +1,7 @@
+$("#towns_results").html("<%= escape_javascript (render :file => 'main/results') %>");
+var pos = $("#cases").offset();
+$('#cases_input').focus();
+$("#results").css({
+	top: (pos.top - 15) + "px",
+	left: (pos.left + $("#cases").width() * 0.7) + "px"
+}).show();

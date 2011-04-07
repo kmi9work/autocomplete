@@ -221,10 +221,12 @@ jQuery.autocomplete = function(input, options) {
 	};
 
 	function selectItem(li) {
+    var fl = true;
 		if (!li) {
 			li = document.createElement("li");
 			li.extra = [];
 			li.selectValue = "";
+			fl = false;
 		}
 		var v = $.trim(li.selectValue ? li.selectValue : li.innerHTML);
 		input.lastSelected = v;
@@ -235,7 +237,9 @@ jQuery.autocomplete = function(input, options) {
 		if (options.isMan){
   		hideManNow();
 		}
-		hideResultsNow();
+		if (fl){
+		  hideResultsNow();
+		}
 		if (options.onItemSelect) setTimeout(function() { options.onItemSelect(li) }, 1);
 	};
 
@@ -321,19 +325,20 @@ jQuery.autocomplete = function(input, options) {
   		if ($cornerDiv.is(":visible")) {
   			$cornerDiv.hide();
   		}
-  		if (options.mustMatch) {
-  			var v = $input.val();
-  			var lis = $("li", result);
-  			var fl = false;
-  			for (i = 0; i < lis.size; i++){
-  			  if (v.toLowerCase() == lis[i].innerHTML.toLowerCase()){
-  			    fl = true
-  			  }
-  			}
-  			if (!fl) {
-  				selectItem(null);
-  			}
-  		}
+      if (options.mustMatch) {
+        var v = $input.val();
+        var lis = $("li", results);
+        var fl = false;
+        for (i = 0; i < lis.size(); i++){
+          if (v.toLowerCase() == lis[i].innerHTML.toLowerCase()){
+            $input.val(lis[i].innerHTML);
+            fl = true;
+          }
+        }
+        if (!fl) {
+          selectItem(null);
+        }
+      }
 	  }
 	};
 

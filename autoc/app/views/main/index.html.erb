@@ -1,0 +1,148 @@
+<br>
+<br>
+<%= form_tag "inputs" do %>
+Towns(r): <input type="text" id="towns" class="input" />
+
+<br>
+Cases: <div class="input input_div"> <span id='cases' class='dotted'><%= link_to "Выберите вариант", choose_path(:format => :js), :remote => true, :class => 'none'%></span></div>
+<br>
+<div id="results" class="results towns" style="display:none; position: absolute">
+  <div class='corner'></div>
+  <div id="towns_results" class="inline">
+  </div>
+  <div id="towns_man" class="inline">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  </div>
+</div>
+
+<% end %>
+
+<script type="text/javascript">
+$(document).ready(function(){
+// --- Автозаполнение ---
+$("#towns").autocompleteArray([
+'Магадан',
+'Магас',
+'Магнитогорск',
+'Майкоп',
+'Майский',
+'Макаров',
+'Макарьев',
+'Макушино',
+'Малая Вишера',
+'Малгобек',
+'Малмыж',
+'Малоархангельск',
+'Малоярославец',
+'Мамадыш',
+'Мамоново',
+'Мантурово',
+'Мариинск',
+'Мариинский Посад',
+'Маркс',
+'Махачкала',
+'Мглин',
+'Мегион',
+'Медвежьегорск',
+'Медногорск',
+'Медынь',
+'Межгорье',
+'Междуреченск',
+'Мезень',
+'Меленки',
+'Мелеуз',
+'Менделеевск',
+'Мензелинск',
+'Мещовск',
+'Миасс',
+'Микунь',
+'Миллерово',
+'Минеральные Воды',
+'Минусинск',
+'Миньяр',
+'Мирный',
+'Михайлов',
+'Михайловка',
+'Михайловск',
+'Мичуринск',
+'Могоча',
+'Можайск',
+'Можга',
+'Моздок',
+'Мончегорск',
+'Морозовск',
+'Моршанск',
+'Мосальск',
+'Москва',
+'Московский',
+'Муравленко',
+'Мураши',
+'Мурманск',
+'Муром',
+'Мценск',
+'Мыски',
+'Мытищи',
+'Мышкин'
+],
+		{
+			delay:10,
+			minChars:0,
+			matchSubset:1,
+			mustMatch:true,
+			maxItemsToShow:15
+		}
+);
+var timeout = null;
+var prev = "";
+var cache = {};
+var keyb = false;
+var hasFocus = false;
+var hasManFocus = false;
+var lastKeyPressCode = null;
+
+$("li", "#towns_results").hover(
+  function(){
+    townsSelect(this);
+  },
+  function(){
+    this.removeClass("ac_over");
+  	this.removeClass("ac_loading");
+  }
+)
+
+$('#cases_input').keydown(function(e){
+  lastKeyPressCode = e.keyCode;
+  if (((e.keyCode >= 48) && (e.keyCode <= 57)) || ((e.keyCode >= 65) && (e.keyCode <= 90))){
+
+    e.preventDefault();
+    //all symbols
+    return;
+  }
+	switch(e.keyCode) {
+		case 38: // up
+			e.preventDefault();
+			moveTownsSelect(-1);
+			break;
+		case 40: // down
+			e.preventDefault();
+			moveTownsSelect(1);
+			break;
+		case 9:  // tab
+		case 13: // return
+		  selectTownsCurrent()
+		  e.preventDefault();
+			break;
+		default:
+  		// e.preventDefault();
+			break;
+	}
+})
+
+});
+</script>
+<br>
+<br>
+<br>
+
+<div id="debug">ololo</div>
