@@ -1,0 +1,18 @@
+<ul>
+  <%= render :partial => "subgroup", :collection => @subgroups %>
+</ul>
+
+<script type="text/javascript">
+$("li", "#subgroups").hover(
+  function(){
+    classifierSelect(this);
+  },
+  function(){
+    $(this).removeClass("ac_over");
+  }
+).click(function(){
+  selectClassifierSubgroup(this);
+  $(this).addClass("ac_loading");
+}
+);
+</script>

@@ -9,8 +9,11 @@ Autoc::Application.routes.draw do
   # Sample of named route:
   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
   # This route can be invoked with purchase_url(:id => product.id)
-  match 'main/choose(.:format)' => "main#choose", :as => :choose
+  match 'main/cases(.:format)' => "main#cases", :as => :cases
   match 'main/show_man/:id(.:format)' => "main#show_man", :as => :show_man
+  match 'main/classifier(.:format)' => "main#classifier", :as => :classifier
+  match '/main/subgroups/:id(.:format)' => "main#subgroups", :as => :subgroups
+  match '/main/categories/:id(.:format)' => "main#categories", :as => :categories
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
 

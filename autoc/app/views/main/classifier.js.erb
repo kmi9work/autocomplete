@@ -1,0 +1,6 @@
+$("#groups").html("<%= escape_javascript (render :file => 'main/classifier_groups') %>");
+var pos = $("#classifier_link").offset();
+$("#classifier").css({
+	top: (pos.top - 15) + "px",
+	left: (pos.left + $("#cases_link").width() * 0.7) + "px"
+}).show();

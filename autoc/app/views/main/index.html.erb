@@ -1,22 +1,29 @@
 <br>
 <br>
-<%= form_tag "inputs" do %>
 Towns(r): <input type="text" id="towns" class="input" />
 
 <br>
-Cases: <div class="input input_div"> <span id='cases' class='dotted'><%= link_to "Выберите вариант", choose_path(:format => :js), :remote => true, :class => 'none'%></span></div>
+Cases: <div class="input input_div"> <span class='dotted'><%= link_to "Выберите вариант", cases_path(:format => :js), :remote => true, :class => 'none', :id => 'cases_link'%></span></div>
 <br>
-<div id="results" class="results towns" style="display:none; position: absolute">
+<div id="cases" class="results cases" style="display:none; position: absolute">
   <div class='corner'></div>
-  <div id="towns_results" class="inline">
+  <div id="cases_results" class="inline">
   </div>
-  <div id="towns_man" class="inline">
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  <div id="cases_man" class="inline">
   </div>
 </div>
 
-<% end %>
+Classifier: <div class="input input_div"> <span class='dotted'><%= link_to_remote "Выберите вариант", classifier_path(:format => :js), :remote => true, :class => 'none', :id => 'classifier_link'%></span></div>
+<div id="classifier" class="results classifier" style="display:none; position: absolute">
+  <div class='corner'></div>
+  <div id="groups" class="inline">
+  </div>
+  <div id="subgroups" class="inline">
+  </div>
+  <div id="categories" class="inline">
+  </div>
+</div>
+
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -93,23 +100,6 @@ $("#towns").autocompleteArray([
 			maxItemsToShow:15
 		}
 );
-var timeout = null;
-var prev = "";
-var cache = {};
-var keyb = false;
-var hasFocus = false;
-var hasManFocus = false;
-var lastKeyPressCode = null;
-
-$("li", "#towns_results").hover(
-  function(){
-    townsSelect(this);
-  },
-  function(){
-    this.removeClass("ac_over");
-  	this.removeClass("ac_loading");
-  }
-)
 
 $('#cases_input').keydown(function(e){
   lastKeyPressCode = e.keyCode;
@@ -130,7 +120,7 @@ $('#cases_input').keydown(function(e){
 			break;
 		case 9:  // tab
 		case 13: // return
-		  selectTownsCurrent()
+		  selectTownsCurrent();
 		  e.preventDefault();
 			break;
 		default:

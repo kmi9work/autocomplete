@@ -1,0 +1,6 @@
+$("#cases_results").html("<%= escape_javascript (render :file => 'main/results') %>");
+var pos = $("#cases_link").offset();
+$("#cases").css({
+	top: (pos.top - 15) + "px",
+	left: (pos.left + $("#cases_link").width() * 0.7) + "px"
+}).show();

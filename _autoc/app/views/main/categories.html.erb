@@ -1,0 +1,17 @@
+<ul>
+  <%= render :partial => "category", :collection => @categories %>
+</ul>
+
+<script type="text/javascript">
+$("li", "#categories").hover(
+  function(){
+    classifierSelect(this);
+  },
+  function(){
+    $(this).removeClass("ac_over");
+  }
+).click(function(){
+  selectClassifierCategory(this);
+}
+);
+</script>

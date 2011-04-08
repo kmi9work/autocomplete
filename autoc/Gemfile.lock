@@ -31,6 +31,8 @@ GEM
     arel (1.0.1)
       activesupport (~> 3.0.0)
     builder (2.1.2)
+    bundle (0.0.1)
+      bundler
     erubis (2.6.6)
       abstract (>= 1.0.0)
     i18n (0.4.2)
@@ -72,5 +74,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bundle
   rails (= 3.0.0)
   sqlite3-ruby
